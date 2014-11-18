@@ -25,11 +25,16 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // extend Enemy and override the sprite
 // add a handleInput() method.
+var Player = Object.create(Enemy);
+Player.sprite = 'images/char-boy.png';
+Player.handleInput = function() {
+
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
+var player = new Player;
 
 
 // This listens for key presses and sends the keys to your
