@@ -28,10 +28,21 @@ Enemy.prototype.render = function() {
 var Player = function() {
     var obj = new Enemy();
     obj.sprite = 'images/char-boy.png';
+    obj.x = 3;
+    obj.y = 1;
     obj.handleInput = function(key) {
-        // switch (key) {
-        //    break;
-        // }
+        switch (key) {
+            // up
+            case foo:
+                // code here;
+                break;
+            // down
+            // left
+            // right
+            default:
+                // default stuff;
+                break;
+        }
     }
     return obj;
 }
@@ -41,7 +52,12 @@ var Player = function() {
 // Place the player object in a variable called player
 var player = new Player;
 
+// How many enemies are there?
+var numEnemies = 5;
 var allEnemies = [];
+for (var i = 0; i < numEnemies; i++) {
+    allEnemies.push(new Enemy);
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
