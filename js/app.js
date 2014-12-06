@@ -28,19 +28,24 @@ Enemy.prototype.render = function() {
 var Player = function() {
     var obj = new Enemy();
     obj.sprite = 'images/char-boy.png';
-    obj.x = 3;
+    obj.x = 1;
     obj.y = 1;
     obj.handleInput = function(key) {
         switch (key) {
-            // up
-            case foo:
-                // code here;
+            case 'right':
+                this.x++;
                 break;
-            // down
-            // left
-            // right
+            case 'left':
+                this.x--;
+                break;
+            case 'down':
+                this.y++;
+                break;
+            case 'up':
+                this.y--;
+                break;
             default:
-                // default stuff;
+                // superflous default case
                 break;
         }
     }
