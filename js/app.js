@@ -6,6 +6,10 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.row = 1;
+    this.x = -101;
+    this.y = this.row * 83 - 30;
+    this.speed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
 }
 
 // Update the enemy's position, required method for game
@@ -14,6 +18,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x = this.x + this.speed * dt;
+    if (this.x > 505) {
+        this.x = -101;
+    }
 }
 
 // Draw the enemy on the screen, required method for game
@@ -28,40 +36,49 @@ Enemy.prototype.render = function() {
 var Player = function() {
     var obj = new Enemy();
     obj.sprite = 'images/char-boy.png';
-    obj.x = 1;
-    obj.y = 1;
+    obj.row = 5;
+    obj.col = 2;
     obj.handleInput = function(key) {
         switch (key) {
             case 'right':
-                this.x++;
+                this.col++;
                 break;
             case 'left':
-                this.x--;
+                this.col--;
                 break;
             case 'down':
-                this.y++;
+                this.row++;
                 break;
             case 'up':
-                this.y--;
+                this.row--;
                 break;
             default:
                 // superflous default case
                 break;
         }
-    }
+        this.report();
+    };
+    obj.update = function() {
+        // console.log(Engine); // undefined?? use 'game'
+        this.x = this.col * 101;
+        this.y = this.row * 83 - 30;// 101;
+    };
+    obj.report = function () {
+        console.log("Player says HI");
+    };
     return obj;
 }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var player = new Player;
+var player = new Player();
 
 // How many enemies are there?
-var numEnemies = 5;
+var numEnemies = 3;
 var allEnemies = [];
 for (var i = 0; i < numEnemies; i++) {
-    allEnemies.push(new Enemy);
+    allEnemies.push(new Enemy());
 }
 
 // This listens for key presses and sends the keys to your

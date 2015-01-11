@@ -23,6 +23,8 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
+        numRows = 6,    // moved these out of render to make them accessible to entities
+        numCols = 5,    // except that they're not because that code loads first? FIXME
         lastTime;
 
     canvas.width = 505;
@@ -64,7 +66,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
+        reset(); // does nothing currently
         lastTime = Date.now();
         main();
     }
@@ -115,8 +117,6 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -132,7 +132,11 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(
+                    Resources.get(rowImages[row]),
+                    col * (canvas.width / numCols),
+                    row * 83// (canvas.height / numRows)
+                );
             }
         }
 
@@ -181,4 +185,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.game = this;
 })(this);
