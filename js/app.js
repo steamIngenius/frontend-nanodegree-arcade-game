@@ -5,11 +5,18 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    // our pretty picture
     this.sprite = 'images/enemy-bug.png';
+
+    // where we are
     this.row = Math.floor(Math.random() * (3 - 1 + 1)) +1;
     this.x = -101;
     this.y = this.row * 83 - 30;
-    this.speed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+
+    // where we're going
+    this.minSpeed = 50;
+    this.maxSpeed = 200;
+    this.speed = Math.floor(Math.random() * (this.maxSpeed - this.minSpeed + 1)) + this.minSpeed;
 }
 
 // Update the enemy's position, required method for game
@@ -20,13 +27,22 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x = this.x + this.speed * dt;
     if (this.x > 505) {
-        this.x = -101;
+        this.reset( );
     }
+    if (Math.abs(this.x - player.x) < 70 && this.row == player.row) player.kill();
 }
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Reset the entity
+Enemy.prototype.reset = function() {
+    this.row = Math.floor(Math.random() * (3 - 1 + 1)) +1;
+    this.x = -101;
+    this.y = this.row * 83 - 30;
+    this.speed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
 }
 
 // Now write your own player class
@@ -41,22 +57,27 @@ var Player = function() {
     obj.handleInput = function(key) {
         switch (key) {
             case 'right':
-                this.col++;
+                if (this.col < 4) this.col++;
                 break;
             case 'left':
-                this.col--;
+                if (this.col > 0) this.col--;
                 break;
             case 'down':
-                this.row++;
+                if (this.row < 5) this.row++;
                 break;
             case 'up':
-                this.row--;
+                if (this.row > 0) this.row--;
+                if (this.row == 0) {
+                    console.log("win");
+                    this.row = 5;
+                    this.col = 2;
+                }
                 break;
             default:
-                // superflous default case
+                // superflous? default case
                 break;
         }
-        this.report();
+        // this.report();
     };
     obj.update = function() {
         // console.log(Engine); // undefined?? use 'game'
@@ -66,6 +87,11 @@ var Player = function() {
     obj.report = function () {
         console.log("Player says HI");
     };
+    obj.kill = function() {
+        console.log("lose");
+        this.row = 5;
+        this.col = 2;
+    }
     return obj;
 }
 
