@@ -13,7 +13,7 @@ var Enemy = function() {
     this.x = -101;
     this.y = this.row * 83 - 30;
 
-    // where we're going
+    // where we're going, random between minSpeed and maxSpeed
     this.minSpeed = 50;
     this.maxSpeed = 200;
     this.speed = Math.floor(Math.random() * (this.maxSpeed - this.minSpeed + 1)) + this.minSpeed;
@@ -29,6 +29,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505) {
         this.reset( );
     }
+    // if the enemy is on the same row as the player and close enought to strike, then .kill() that sucka
     if (Math.abs(this.x - player.x) < 70 && this.row == player.row) player.kill();
 }
 
@@ -67,7 +68,7 @@ var Player = function() {
                 break;
             case 'up':
                 if (this.row > 0) this.row--;
-                if (this.row == 0) {
+                if (this.row == 0) {              // did we win?
                     console.log("win");
                     this.row = 5;
                     this.col = 2;
@@ -77,7 +78,7 @@ var Player = function() {
                 // superflous? default case
                 break;
         }
-        // this.report();
+        // this.report(); 
     };
     obj.update = function() {
         // console.log(Engine); // undefined?? use 'game'
