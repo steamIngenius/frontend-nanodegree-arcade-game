@@ -8,15 +8,22 @@ var Enemy = function() {
     // our pretty picture
     this.sprite = 'images/enemy-bug.png';
 
+    // set our speed window
+    this.minSpeed = 100;
+    this.maxSpeed = 400;
+
+    // initialize/reset
+    this.reset();
+
     // where we are
-    this.row = Math.floor(Math.random() * (3 - 1 + 1)) +1;
-    this.x = -101;
-    this.y = this.row * 83 - 30;
+    // this.row = Math.floor(Math.random() * (3 - 1 + 1)) +1;
+    // this.x = -101;
+    // this.y = this.row * 83 - 30;
+    // refactored to the reset() function
 
     // where we're going, random between minSpeed and maxSpeed
-    this.minSpeed = 50;
-    this.maxSpeed = 200;
-    this.speed = Math.floor(Math.random() * (this.maxSpeed - this.minSpeed + 1)) + this.minSpeed;
+    // this.speed = Math.floor(Math.random() * (this.maxSpeed - this.minSpeed + 1)) + this.minSpeed;
+    // refactored to the reset function
 }
 
 // Update the enemy's position, required method for game
@@ -43,7 +50,7 @@ Enemy.prototype.reset = function() {
     this.row = Math.floor(Math.random() * (3 - 1 + 1)) +1;
     this.x = -101;
     this.y = this.row * 83 - 30;
-    this.speed = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+    this.speed = Math.floor(Math.random() * (this.maxSpeed - this.minSpeed + 1)) + this.minSpeed;
 }
 
 // Now write your own player class
