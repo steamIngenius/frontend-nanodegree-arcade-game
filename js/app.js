@@ -33,10 +33,11 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt;
+    // if we go past the end of the screen, reset
     if (this.x > ctx.canvas.width) {
         this.reset( );
     }
-    // if the enemy is on the same row as the player and close enought to strike, then .kill() that sucka
+    // if the enemy is on the same row as the player and close enough to strike, then .kill() that sucka
     if (Math.abs(this.x - player.x) < 70 && this.row == player.row) player.kill();
 }
 
